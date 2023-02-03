@@ -833,6 +833,11 @@ footer input {
   margin: 1rem;
   width: 80%;
 }
+
+@media (min-width: 768px) {
+
+}
+  
 .dashboard .content table td {
   padding: 1rem;
 }
@@ -883,4 +888,11 @@ td {
 }
 .dashboard .logo .link {
   color: var(--main-bg-color);
+}
+
+.loader {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

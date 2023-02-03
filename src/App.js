@@ -17,8 +17,13 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SingleBlog from "./pages/SingleBlog";
+import { useState } from "react";
+import { useEffect } from "react";
+import { ThreeDots } from "react-loader-spinner";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -48,9 +53,29 @@ function App() {
     )
   );
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+  }, []);
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      {isLoading ? (
+        <div className="loader">
+          <ThreeDots
+            height="80"
+            width="80"
+            radius="9"
+            color="#ff9908"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{}}
+            wrapperClassName=""
+            visible={true}
+          />
+        </div>
+      ) : (
+        <RouterProvider router={router} />
+      )}
     </div>
   );
 }

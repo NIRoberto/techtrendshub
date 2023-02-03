@@ -54,9 +54,9 @@ const Nav = () => {
               <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <NavLink to="/ai">AI</NavLink>
+              <NavLink to="/ai">Category</NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink to="/cloud">Cloud</NavLink>
             </li>
             <li>
@@ -64,7 +64,7 @@ const Nav = () => {
             </li>
             <li>
               <NavLink to="/blockchain">Blockchain</NavLink>
-            </li>
+            </li> */}
             <li>
               <NavLink to="/contact">Contact</NavLink>
             </li>
