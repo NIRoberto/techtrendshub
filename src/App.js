@@ -42,6 +42,7 @@ function App() {
         </Route>
         <Route path="/dashboard" element={<SharedDashboard />}>
           <Route index element={<DashboardView />} />
+          <Route path="*" element={<DashboardView />} />
         </Route>
       </>
     )

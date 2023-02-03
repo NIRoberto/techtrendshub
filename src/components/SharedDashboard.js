@@ -1,4 +1,5 @@
 import React from "react";
+import { FaBloggerB, FaQuestionCircle } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
 
 const SharedDashboard = () => {
@@ -6,9 +7,11 @@ const SharedDashboard = () => {
     <div className="dashboard">
       <div className="nav">
         <div className="logo">
-          <h1>
-            <span>Tech</span>Trends
-          </h1>
+          <Link to="/" className="link">
+            <h1>
+              <span>Tech</span>Trends
+            </h1>
+          </Link>
         </div>
         <div className="logout">
           <div className="user_logout">
@@ -22,13 +25,19 @@ const SharedDashboard = () => {
       <div className="sidebar">
         <ul>
           <li>
-            <Link className="link" to="/query">
-              Blogs
+            <Link className="link" to="/dashboard">
+              <span>
+                <FaBloggerB />
+              </span>
+              <span>Blogs</span>
             </Link>
           </li>
           <li>
-            <Link className="link" to="/query">
-              Queries
+            <Link className="link" to="/dashboard">
+              <span>
+                <FaQuestionCircle />
+              </span>
+              <span>Queries</span>
             </Link>
           </li>
         </ul>

@@ -543,7 +543,7 @@ footer ul a:hover {
 form {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 40%;
 }
 
 form div {
@@ -552,7 +552,9 @@ form div {
   gap: 1rem;
 }
 
-form input,
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
 form textarea {
   outline: none;
   border: 1px solid rgb(179, 179, 179);
@@ -570,7 +572,12 @@ form button {
   padding: 0.7rem;
   width: 60%;
 }
-
+footer form {
+  width: 80%;
+}
+footer form input {
+  width: 100%;
+}
 .comments {
   display: flex;
   flex-direction: column;
@@ -752,12 +759,35 @@ footer input {
 
 .dashboard .sidebar {
   background-color: var(--text-white);
-
   height: 100vh;
 }
 
+.dashboard .sidebar ul {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  list-style-type: none;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+.dashboard .sidebar ul li {
+  width: 40%;
+}
+.sidebar ul .link {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.sidebar ul .link span {
+  color: var(--main-bg-color);
+  /* font-weight: bold; */
+}
+.sidebar ul .link span:hover {
+  color: var(--main-color);
+}
 .dashboard .out {
-  background-color: #faefdf;
+  background-color: #fcf9f5;
 }
 
 .dashboard .logout {
@@ -777,4 +807,80 @@ footer input {
   outline: none;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.dashboard .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.dashboard .content button {
+  background-color: var(--main-bg-color);
+  color: var(--main-color);
+  border-radius: 5px;
+  margin-right: 1rem;
+  padding: 1rem 2rem;
+  margin-top: 3rem;
+  outline: none;
+  border: none;
+}
+.dashboard .content table {
+  background-color: white;
+  border-collapse: collapse;
+  border-radius: 15px;
+  margin: 1rem;
+  width: 80%;
+}
+.dashboard .content table td {
+  padding: 1rem;
+}
+
+th,
+td {
+  border: 1px solid rgb(214, 213, 213);
+  padding: 8px;
+  text-align: left;
+}
+
+.dashboard .actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.dashboard .actions .edit {
+  background-color: rgb(11, 151, 11);
+  color: white;
+  padding: 0.4rem;
+  border-radius: 5px;
+  font-size: smaller;
+}
+.dashboard .actions .delete {
+  background-color: red;
+  color: white;
+  padding: 0.4rem;
+  border-radius: 5px;
+  font-size: smaller;
+}
+
+.dashboard .action th {
+  font-weight: bold;
+}
+
+.dashboard .add {
+  background-color: var(--text-white);
+  border-radius: 5px;
+  padding: 2rem;
+  width: 80%;
+  margin: 1rem;
+}
+.dashboard .add form textarea {
+  height: 8rem;
+}
+.dashboard form {
+  width: 100%;
+}
+.dashboard .logo .link {
+  color: var(--main-bg-color);
 }
