@@ -4,7 +4,6 @@ import { MdDateRange } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const SingleCard = ({ data }) => {
-  //   console.log(data);
 
   const { id, title, date, description, comments } = data;
   return (

@@ -48,6 +48,7 @@ header ul {
   display: flex;
   list-style-type: none;
   gap: 1rem;
+  align-items: center;
 }
 
 header ul li a {
@@ -72,10 +73,10 @@ header button {
   background-color: var(--main-color);
   color: white;
   padding: 1rem 2rem;
+  border: 2px solid var(--main-color);
   border-radius: 5px;
 }
 header button:hover {
-  border: 2px solid var(--main-color);
   color: var(--main-color);
   background-color: var(--text-white);
   transition: all 0.3s ease-in-out;
@@ -539,6 +540,10 @@ footer ul a:hover {
   z-index: 1;
   width: 80%;
 }
+.singleBlog  .description {
+  font-size: 18px;
+  line-height: 1.8;
+}
 
 form {
   display: flex;
@@ -552,6 +557,22 @@ form div {
   gap: 1rem;
 }
 
+form .error {
+  margin-bottom: 0.7rem;
+  color: red;
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
+form .exit {
+  color: red;
+  font-size: small;
+  text-align: center;
+}
+.user {
+  text-decoration: none;
+  padding: 0 0.2rem;
+}
 form input[type="text"],
 form input[type="email"],
 form input[type="password"],
@@ -560,7 +581,7 @@ form textarea {
   border: 1px solid rgb(179, 179, 179);
   border-radius: 5px;
   padding: 0.7rem;
-  margin: 1rem 0;
+  /* margin:0.7rem 0; */
 }
 
 form button {
@@ -746,12 +767,13 @@ footer input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 2rem;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .dashboard .logo {
   color: var(--main-bg-color);
+  font-size: small;
 }
 .dashboard .logo span {
   color: var(--main-color);
@@ -760,6 +782,7 @@ footer input {
 .dashboard .sidebar {
   background-color: var(--text-white);
   height: 100vh;
+  padding: 1rem;
 }
 
 .dashboard .sidebar ul {
@@ -772,7 +795,10 @@ footer input {
   gap: 2rem;
 }
 .dashboard .sidebar ul li {
-  width: 40%;
+  /* width: 40%; */
+  /* border: 1px solid greenyellow; */
+  display: flex;
+  width: 100%;
 }
 .sidebar ul .link {
   display: flex;
@@ -787,7 +813,7 @@ footer input {
   color: var(--main-color);
 }
 .dashboard .out {
-  background-color: #fcf9f5;
+  background-color: #fad8ad;
 }
 
 .dashboard .logout {
@@ -815,8 +841,9 @@ footer input {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: relative;
 }
-.dashboard .content button {
+.dashboard .content .button {
   background-color: var(--main-bg-color);
   color: var(--main-color);
   border-radius: 5px;
@@ -831,13 +858,12 @@ footer input {
   border-collapse: collapse;
   border-radius: 15px;
   margin: 1rem;
-  width: 80%;
+  width: 80%; 
 }
 
 @media (min-width: 768px) {
-
 }
-  
+
 .dashboard .content table td {
   padding: 1rem;
 }
@@ -858,6 +884,7 @@ td {
   background-color: rgb(11, 151, 11);
   color: white;
   padding: 0.4rem;
+  cursor: pointer;
   border-radius: 5px;
   font-size: smaller;
 }
@@ -865,6 +892,7 @@ td {
   background-color: red;
   color: white;
   padding: 0.4rem;
+  cursor: pointer;
   border-radius: 5px;
   font-size: smaller;
 }
@@ -873,12 +901,28 @@ td {
   font-weight: bold;
 }
 
-.dashboard .add {
+.dashboard .add,
+.dashboard .update {
   background-color: var(--text-white);
   border-radius: 5px;
   padding: 2rem;
   width: 80%;
   margin: 1rem;
+}
+
+.dashboard .update {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  display: none;
+}
+.dashboard .update  textarea {
+  height: 10rem;
+}
+
+.dashboard .update .btns button {
+  height: 2.5rem;
 }
 .dashboard .add form textarea {
   height: 8rem;
@@ -890,9 +934,70 @@ td {
   color: var(--main-bg-color);
 }
 
+.dashboard .nav .nav_logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dashboard .nav .nav_logo .menu {
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
 .loader {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.dashboard h4 {
+  color: var(--main-color);
+  margin: 1rem 0;
+}
+
+.dashboard ul {
+  border-left: 4px solid var(--main-color);
+  margin-left: 2rem;
+  border-radius: 5px;
+}
+.dashboard ul li {
+  padding: 0 1rem;
+}
+
+.dashboard .content h1 {
+  padding: 2rem;
+  color: var(--main-color);
+}
+
+.main_dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 4rem;
+}
+
+.main_dashboard div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 5px;
+  padding: 3rem;
+}
+
+.main_dashboard div:nth-child(odd) {
+  background-color: white;
+  color: var(--main-bg-color);
+}
+
+.main_dashboard div:nth-child(even) {
+  background-color: var(--main-bg-color);
+  color: var(--main-color);
+}
+
+.main_dashboard .number {
+  font-size: 2rem;
+  font-weight: bold;
 }

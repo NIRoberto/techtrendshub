@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { BsLinkedin, BsGithub, BsInstagram, BsFacebook } from "react-icons/bs";
 import { Link, NavLink } from "react-router-dom";
+import { AppContext } from "../context/AppProvider";
 
 const Nav = () => {
   const [nav, setNav] = useState(true);
-
+  const { auth } = useContext(AppContext);
+  console.log(auth);
   return (
     <>
       <header>
@@ -69,14 +71,28 @@ const Nav = () => {
               <NavLink to="/contact">Contact</NavLink>
             </li>
           </ul>
+
           <div className="auth">
-            <Link to="/login">
-              <button>Login</button>
-            </Link>
-            <span>or</span>
-            <Link to="/register">
-              <button className="button">Register</button>
-            </Link>
+            {auth?.token ? (
+              <>
+                <Link className="user" to="/dashboard">
+                  <span className="user">{auth.user.name.split(" ")[0]}</span>
+                </Link>
+                <Link className="user" to="/dashboard">
+                  <button>Go to dashboard</button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <button>Login</button>
+                </Link>
+                <span>or</span>
+                <Link to="/register">
+                  <button className="button">Register</button>
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       </header>

@@ -1,45 +1,103 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AiOutlineMenu } from "react-icons/ai";
 import { FaBloggerB, FaQuestionCircle } from "react-icons/fa";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { AppContext } from "../context/AppProvider";
 
 const SharedDashboard = () => {
+  const { auth } = useContext(AppContext);
+  console.log(auth);
+  const navigate = useNavigate();
   return (
     <div className="dashboard">
       <div className="nav">
-        <div className="logo">
-          <Link to="/" className="link">
-            <h1>
-              <span>Tech</span>Trends
-            </h1>
-          </Link>
+        <div className="nav_logo">
+          <div className="logo">
+            <Link to="/" className="link">
+              <h1>
+                <span>Tech</span>Trends
+              </h1>
+            </Link>
+          </div>
+          <div className="menu">
+            <AiOutlineMenu />
+          </div>
         </div>
         <div className="logout">
           <div className="user_logout">
-            <span className="user">Robert</span>
+            <span className="user">{auth.user.name.split(" ")[0]}</span>
           </div>
           <div className="">
-            <span className="logout_btn">Logout</span>
+            <span
+              className="logout_btn"
+              onClick={() => {
+                localStorage.removeItem("loggedUserData");
+                window.location.reload(true);
+              }}
+            >
+              Logout
+            </span>
           </div>
         </div>
       </div>
       <div className="sidebar">
+        <h4>Dashboard</h4>
         <ul>
           <li>
-            <Link className="link" to="/dashboard">
-              <span>
+            <Link to="/dashboard" className="link">
+              <span>Analytics</span>
+            </Link>
+          </li>
+        </ul>
+        <h4>Manage blogs</h4>
+        <ul>
+          <li>
+            <Link className="link" to="blogs">
+              {/* <span>
                 <FaBloggerB />
-              </span>
+              </span> */}
               <span>Blogs</span>
             </Link>
           </li>
           <li>
-            <Link className="link" to="/dashboard">
-              <span>
-                <FaQuestionCircle />
-              </span>
+            <Link className="link" to="create">
+              {/* <span> */}
+              {/* <FaQuestionCircle /> */}
+              {/* </span> */}
+              <span>Create blog</span>
+            </Link>
+          </li>
+        </ul>
+        <h4>Manage Emails</h4>
+        <ul>
+          <li>
+            <Link className="link" to="queries">
               <span>Queries</span>
             </Link>
           </li>
+          <li>
+            <Link className="link" to="letters">
+              <span>News Letter email</span>
+            </Link>
+          </li>
+        </ul>
+        <h4>Manage users</h4>
+        <ul>
+          <li>
+            <Link className="link" to="users">
+              <span>All users</span>
+            </Link>
+          </li>
+          {/* <li>
+            <Link className="link" to="/login">
+              <span>Login</span>
+            </Link>
+          </li>
+          <li>
+            <Link className="link" to="/register">
+              <span>Register</span>
+            </Link>
+          </li> */}
         </ul>
       </div>
       <div className="out">
