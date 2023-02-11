@@ -1,13 +1,10 @@
 import React, { useContext } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { FaBloggerB, FaQuestionCircle } from "react-icons/fa";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 
 const SharedDashboard = () => {
   const { auth } = useContext(AppContext);
-  console.log(auth);
-  const navigate = useNavigate();
   return (
     <div className="dashboard">
       <div className="nav">

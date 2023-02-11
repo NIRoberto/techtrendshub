@@ -11,7 +11,7 @@ const Ai = () => {
       <h1>Artifial intelligence /</h1>
       <div className="content">
         <div className="allai">
-          {blogs.map((item, index) => {
+          {blogs?.map((item, index) => {
             return <Card key={item.id} item={item} index={index} />;
           })}
         </div>

@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "../../axios/axios";
 import { Report } from "notiflix/build/notiflix-report-aio";
+import Notiflix from "notiflix";
 // import Authorization from "../../axios/global";
 import { AppContext } from "../../context/AppProvider";
 
@@ -18,15 +19,31 @@ const schema = yup.object().shape({
   description: yup.string().required(),
 });
 const Blogs = () => {
-  const { auth,blogs } = useContext(AppContext);
+  const { auth, blogs } = useContext(AppContext);
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/blog/${id}`, {
-        headers: {
-          Authorization: `Bearer ${auth?.token}`,
+      Notiflix.Confirm.show(
+        "COnfirm to delete a post",
+        "Are you sure you want to delete this post?",
+        "Yes",
+        "No",
+        async function okCb() {
+          await axios.delete(`/blog/${id}`, {
+            headers: {
+              Authorization: `Bearer ${auth?.token}`,
+            },
+          });
+          window.location.reload(true);
         },
-      });
-      window.location.reload(true);
+        function cancelCb() {
+          // window.location.reload(true);
+        },
+        {
+          width: "320px",
+          borderRadius: "8px",
+          // etc...
+        }
+      );
     } catch (error) {
       console.log(error.response);
     }

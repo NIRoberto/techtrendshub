@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Report } from "notiflix/build/notiflix-report-aio";
 import Side from "../components/Side";
+import Notiflix from "notiflix";
 import { AppContext } from "../context/AppProvider";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "../axios/axios";
@@ -25,36 +26,46 @@ const SingleBlog = () => {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate();
   const onSubmit = async (data) => {
     try {
-      await axios.post(`/comment/${aiId}`, data, {
-        headers: {
-          Authorization: `Bearer ${auth?.token}`,
-        },
-      });
-
-      Report.success("You made it!", "Comment posted", "Ok", {
-        timeout: 2000,
-      });
-      setTimeout(() => {
-        window.location.reload(true);
-      }, 3000);
+      if (auth?.token) {
+        await axios.post(`/comment/${aiId}`, data, {
+          headers: {
+            Authorization: `Bearer ${auth?.token}`,
+          },
+        });
+        Report.success("You made it!", "Comment posted", "Ok", {
+          timeout: 2000,
+        });
+        setTimeout(() => {
+          window.location.reload(true);
+        }, 3000);
+      } else {
+        Notiflix.Report.failure(
+          "Failed",
+          "Login  first to comment on this post",
+          "Ok",
+          function cb() {
+            navigate("/login");
+          }
+        );
+      }
     } catch (error) {
       console.log(error.response);
     }
   };
   // if (!filtered) return;
 
-  const { image, description, title, comments } = filtered;
   return (
     <div className="singleBlog">
       <div className="desc">
-        <img src={image} alt={title} />
-        <h1>{title}</h1>
-        <div className="description">{description}</div>
+        <img src={filtered?.image} alt={filtered?.title} />
+        <h1>{filtered?.title}</h1>
+        <div className="description">{filtered?.description}</div>
       </div>
       <div className="comments">
-        <h5>({comments.length}) Comment</h5>
+        <h5>({filtered?.comments.length}) Comment</h5>
         <div className="comment">
           {filtered.comments.map((item) => {
             console.log(item);
