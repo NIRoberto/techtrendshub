@@ -1,8 +1,11 @@
-import React from 'react'
-import Card from './Card';
-import blog from './data/blog';
+import React from "react";
+import { useContext } from "react";
+import { AppContext } from "../context/AppProvider";
+import Card from "./Card";
+import blog from "./data/blog";
 
 const Side = () => {
+  const { blogs } = useContext(AppContext);
   return (
     <div className="sidebar">
       <div className="category">
@@ -36,12 +39,14 @@ const Side = () => {
       </div>
       <div className="popular">
         <h4> Popular post</h4>
-        {blog.map((item, index) => {
-          return <Card key={item.id} item={item} index={index} />;
+        {blogs.map((item, index) => {
+          if (index < 4) {
+            return <Card key={item.id} item={item} index={index} />;
+          }
         })}
       </div>
     </div>
   );
-}
+};
 
-export default Side
+export default Side;

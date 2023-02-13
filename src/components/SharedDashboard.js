@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { Link, Outlet } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 
 const SharedDashboard = () => {
   const { auth } = useContext(AppContext);
+  const [sidebar, setSidebar] = useState(false);
   return (
     <div className="dashboard">
       <div className="nav">
@@ -16,7 +17,12 @@ const SharedDashboard = () => {
               </h1>
             </Link>
           </div>
-          <div className="menu">
+          <div
+            className="menu"
+            onClick={() => {
+              setSidebar(!sidebar);
+            }}
+          >
             <AiOutlineMenu />
           </div>
         </div>
@@ -37,7 +43,7 @@ const SharedDashboard = () => {
           </div>
         </div>
       </div>
-      <div className="sidebar">
+      <div className={`sidebar ${sidebar ? "sidebar_active" : "sidebar_not"}`}>
         <h4>Dashboard</h4>
         <ul>
           <li>

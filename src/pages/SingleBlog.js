@@ -10,14 +10,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "../axios/axios";
 
 const schema = yup.object().shape({
-  name: yup.string().required(),
-  email: yup.string().email().required(),
   comment: yup.string().min(3).required(),
 });
 const SingleBlog = () => {
   const { aiId } = useParams();
   const { blogs, auth } = useContext(AppContext);
   const filtered = blogs.find((item) => item._id === aiId);
+  console.log(filtered);
   const {
     register,
     handleSubmit,
@@ -67,7 +66,7 @@ const SingleBlog = () => {
       <div className="comments">
         <h5>({filtered?.comments.length}) Comment</h5>
         <div className="comment">
-          {filtered.comments.map((item) => {
+          {filtered?.comments.map((item) => {
             console.log(item);
             return (
               <div>
@@ -78,7 +77,7 @@ const SingleBlog = () => {
           })}
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
+          {/* <div>
             <label htmlFor="email">Full name</label>
             <input
               type="text"
@@ -87,8 +86,8 @@ const SingleBlog = () => {
               placeholder="Enter name here..."
             />
             <span className="error">{errors?.name?.message}</span>
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -97,7 +96,7 @@ const SingleBlog = () => {
               placeholder="Enter email here..."
             />
             <span className="error">{errors?.email?.message}</span>
-          </div>
+          </div> */}
           <div>
             <label htmlFor="comment">comment</label>
             <textarea

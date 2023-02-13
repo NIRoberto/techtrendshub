@@ -1,5 +1,6 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
+import { ImCross } from "react-icons/im";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -83,12 +84,14 @@ const Blogs = () => {
           Authorization: `Bearer ${auth?.token}`,
         },
       });
-      Report.success("You made it!", "Blog updated successfully ", "Ok", {
-        timeout: 2000,
-      });
-      setTimeout(() => {
-        window.location.reload(true);
-      }, 3000);
+      Report.success(
+        "You made it!",
+        "Blog updated successfully ",
+        "Ok",
+        function cb() {
+          window.location.reload(true);
+        }
+      );
     } catch (error) {
       console.log(error.response);
     }
@@ -146,6 +149,10 @@ const Blogs = () => {
           </table>
           <div className="update" style={{ display: !modal ? "none" : "flex" }}>
             <form onSubmit={handleSubmit(onSubmit)}>
+              <span className="btn1" onClick={() => setModal(false)}>
+                <ImCross />
+              </span>
+
               <div>
                 <label htmlFor="title">Title</label>
                 <input
@@ -176,7 +183,6 @@ const Blogs = () => {
               </div>
               <div className="btns">
                 <button className="button">Update</button>
-                <span onClick={() => setModal(false)}>Cancel</span>
               </div>
             </form>
           </div>
