@@ -7,7 +7,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "../../axios/axios";
 import { Report } from "notiflix/build/notiflix-report-aio";
 import Notiflix from "notiflix";
-// import Authorization from "../../axios/global";
 import { AppContext } from "../../context/AppProvider";
 
 // import blog from "../../components/data/blog";
@@ -50,7 +49,7 @@ const Blogs = () => {
     }
   };
   const [selected, setSelected] = useState(null);
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(true);
   const getSingleBlog = async (id) => {
     const Selected = blogs.find((blog) => blog._id === id);
     setSelected(Selected);
@@ -104,51 +103,60 @@ const Blogs = () => {
       ) : (
         <div className="content">
           <h1>All post here</h1>
-          <table>
-            <thead>
-              <tr>
-                <th>N</th>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* <tr> */}
-              {blogs.map((item, index) => {
-                const { title, date, _id } = item;
-                return (
-                  <tr key={_id}>
-                    <td>{index + 1}</td>
-                    <td>
-                      {title.length < 70 ? title : title.slice(0, 69) + "..."}
-                    </td>
-                    <td>{date}</td>
-                    <td className="actions">
-                      <span
-                        className="edit"
-                        onClick={() => {
-                          getSingleBlog(_id);
-                          setModal(true);
-                        }}
-                      >
-                        Edit
-                      </span>
-                      <span
-                        className="delete"
-                        onClick={() => handleDelete(_id)}
-                      >
-                        Delete
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
-              {/* </tr> */}
-            </tbody>
-          </table>
-          <div className="update" style={{ display: !modal ? "none" : "flex" }}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="table">
+            <table>
+              <thead>
+                <tr>
+                  <th>N</th>
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* <tr> */}
+                {blogs.map((item, index) => {
+                  const { title, date, _id } = item;
+                  return (
+                    <tr key={_id}>
+                      <td>{index + 1}</td>
+                      <td>
+                        {title.length < 70 ? title : title.slice(0, 69) + "..."}
+                      </td>
+                      <td>{date}</td>
+                      <td className="actions">
+                        <span
+                          className="edit"
+                          onClick={() => {
+                            getSingleBlog(_id);
+                            setModal(true);
+                          }}
+                        >
+                          Edit
+                        </span>
+                        <span
+                          className="delete"
+                          onClick={() => handleDelete(_id)}
+                        >
+                          Delete
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {/* </tr> */}
+              </tbody>
+            </table>
+          </div>
+          <div
+            onClick={() => setModal(false)}
+            className="update"
+            style={{ display: !modal ? "none" : "flex" }}
+          >
+            <form
+              onClick={(e) => e.stopPropagation()}
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <span className="btn1" onClick={() => setModal(false)}>
                 <ImCross />
               </span>

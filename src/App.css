@@ -817,6 +817,7 @@ footer input {
   background-color: #fcdfba;
   width: 100%;
   position: relative;
+  /* overflow-y: auto; */
   /* z-index: -1; */
 }
 
@@ -915,14 +916,27 @@ td {
 }
 
 .dashboard .update {
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  right: 10%;
+  position: fixed;
+  top: -1rem;
+  left: -1rem;
+  right: 0%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  bottom: 0%;
+  background-color: whitesmoke;
   display: none;
 }
+
+.dashboard .update form {
+  background-color: white;
+  width: 60%;
+  border-radius: 5px;
+  padding: 1rem;
+}
 .dashboard .update textarea {
-  height: 10rem;
+  height: 5rem;
 }
 
 .dashboard .update .btns button {
@@ -979,7 +993,7 @@ td {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  padding: 4rem;
+  padding: 2rem;
 }
 
 .main_dashboard div {
@@ -988,7 +1002,7 @@ td {
   align-items: center;
   gap: 1rem;
   border-radius: 5px;
-  padding: 3rem;
+  padding: 1rem;
 }
 
 .main_dashboard div:nth-child(odd) {
@@ -1005,6 +1019,20 @@ td {
   font-size: 2rem;
   font-weight: bold;
 }
+.charts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.charts div {
+  padding: 1rem;
+  width: 100%;
+}
+.charts div {
+  background-color: white;
+}
 
 @media (max-width: 960px) {
   .dashboard {
@@ -1019,6 +1047,10 @@ td {
   }
   .main_dashboard {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .charts {
+    display: grid;
+    grid-template-columns: 1fr;
   }
   .dashboard .out {
     min-height: 100vh;
@@ -1091,4 +1123,8 @@ table tbody tr.active-row {
   padding: 0.5rem 1rem;
   border-radius: 5px;
   margin: 2rem 0;
+}
+
+.table {
+  overflow-x: auto;
 }

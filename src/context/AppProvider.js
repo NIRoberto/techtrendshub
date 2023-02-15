@@ -7,7 +7,7 @@ const AppProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
 
   const [blogs, setBlogs] = useState([]);
-
+  const [users, setUsers] = useState([]);
   const fetchBlogs = async () => {
     try {
       const data = await axios("/blog", {
@@ -15,6 +15,9 @@ const AppProvider = ({ children }) => {
           Authorization: `Bearer ${auth?.token}`,
         },
       });
+      const usersData = await axios.get("/users");
+      console.log(usersData);
+
       setBlogs(data.data.blogs);
     } catch (error) {
       console.log(error.response);
