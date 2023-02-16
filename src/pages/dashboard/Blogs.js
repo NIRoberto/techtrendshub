@@ -126,14 +126,14 @@ const Blogs = () => {
               <tbody>
                 {/* <tr> */}
                 {blogs.map((item, index) => {
-                  const { title, date, _id } = item;
+                  const { title, createdAt, _id } = item;
                   return (
                     <tr key={_id}>
                       <td>{index + 1}</td>
                       <td>
                         {title.length < 70 ? title : title.slice(0, 69) + "..."}
                       </td>
-                      <td>{date}</td>
+                      <td>{createdAt.substring(0, 10)}</td>
                       <td className="actions">
                         <span
                           className="edit"

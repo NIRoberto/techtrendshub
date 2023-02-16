@@ -7,7 +7,7 @@ const AppProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const [blogs, setBlogs] = useState([]);
   const [users, setUsers] = useState([]);
-  const [letters, setLetters] = useState([]);
+  // const [letters, setLetters] = useState([]);
 
   const fetchBlogs = async () => {
     try {
@@ -30,7 +30,7 @@ const AppProvider = ({ children }) => {
     // Authorization(auth?.token);
     fetchBlogs();
   }, []);
-
+  console.log(blogs);
   return (
     <AppContext.Provider value={{ auth, users, blogs, setAuth }}>
       {children}

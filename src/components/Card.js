@@ -5,7 +5,7 @@ import { MdDateRange } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Card = ({ item }) => {
-  const { title, _id, comments, image, description, date } = item;
+  const { title, _id, comments, image, description, createdAt } = item;
   return (
     <div className="card">
       <img src={image} alt={title} />
@@ -18,7 +18,7 @@ const Card = ({ item }) => {
             </span>
             <span>
               <MdDateRange className="icon" />
-              <span>{date}</span>
+              <span>{createdAt.substring(0, 10)}</span>
             </span>
             <span className="comment">
               <AiOutlineComment />
