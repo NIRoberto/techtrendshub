@@ -5,7 +5,6 @@ import { AppContext } from "../../context/AppProvider";
 
 const Analytics = () => {
   const { users, blogs } = useContext(AppContext);
-
   const allData = [
     {
       id: 11,
