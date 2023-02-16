@@ -49,7 +49,7 @@ const Blogs = () => {
     }
   };
   const [selected, setSelected] = useState(null);
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   const getSingleBlog = async (id) => {
     const Selected = blogs.find((blog) => blog._id === id);
     setSelected(Selected);
