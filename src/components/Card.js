@@ -1,4 +1,5 @@
 import React from "react";
+import parse from "html-react-parser";
 import { AiOutlineComment, AiOutlineUser } from "react-icons/ai";
 import { MdDateRange } from "react-icons/md";
 import { Link } from "react-router-dom";
@@ -29,7 +30,13 @@ const Card = ({ item }) => {
               <h3>{title}</h3>
             </Link>
           </div>
-          <div className="description">{description.length<200?description:description.slice(0,200)+"..."}</div>
+          <div className="description">
+            {parse(
+              description.length < 200
+                ? description
+                : description.slice(0, 200) + "..."
+            )}
+          </div>
         </div>
         <Link to={`/ai/${_id}`}>
           <button className="btn">Read more...</button>

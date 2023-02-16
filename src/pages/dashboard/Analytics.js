@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { Bar, Line, Pie } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 import { AppContext } from "../../context/AppProvider";
 
 const Analytics = () => {
-  const { auth, blogs } = useContext(AppContext);
+  const { users, blogs } = useContext(AppContext);
 
   const allData = [
     {
@@ -29,7 +29,7 @@ const Analytics = () => {
     },
   ];
 
-  const [userData, setUserData] = useState({
+  const [userData] = useState({
     labels: allData.map((item) => item.id),
     datasets: [
       {
@@ -55,7 +55,7 @@ const Analytics = () => {
       </div>
       <div className="main_dashboard">
         <div>
-          <span className="number">12</span>
+          <span className="number">{users.length}</span>
           <span>All users</span>
         </div>
         <div>

@@ -12,7 +12,7 @@ import axios from "../axios/axios";
 const schema = yup.object().shape({
   comment: yup.string().min(3).required(),
 });
-const SingleBlog = () => {
+const SingleBlog = (props) => {
   const { aiId } = useParams();
   const { blogs, auth } = useContext(AppContext);
   const filtered = blogs.find((item) => item._id === aiId);
@@ -61,7 +61,10 @@ const SingleBlog = () => {
       <div className="desc">
         <img src={filtered?.image} alt={filtered?.title} />
         <h1>{filtered?.title}</h1>
-        <div className="description">{filtered?.description}</div>
+        <div
+          className="description"
+          dangerouslySetInnerHTML={{ __html: filtered?.description }}
+        ></div>
       </div>
       <div className="comments">
         <h5>({filtered?.comments.length}) Comment</h5>

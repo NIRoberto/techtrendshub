@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "../../axios/axios";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Report } from "notiflix/build/notiflix-report-aio";
 import Notiflix from "notiflix";
 import { AppContext } from "../../context/AppProvider";
@@ -20,6 +22,8 @@ const schema = yup.object().shape({
 });
 const Blogs = () => {
   const { auth, blogs } = useContext(AppContext);
+  const [error, setError] = useState("");
+  const [description, setDescription] = useState("");
   const handleDelete = async (id) => {
     try {
       Notiflix.Confirm.show(
@@ -71,7 +75,13 @@ const Blogs = () => {
   useEffect(() => {
     reset(selected);
   }, [selected]);
-  const onSubmit = async ({ image, title, description }) => {
+  const onSubmit = async ({ image, title }) => {
+    if (!description) {
+      setError("Description is required");
+      return;
+    } else {
+      setError("");
+    }
     try {
       const formData = new FormData();
       formData.append("image", image[0]);
@@ -173,12 +183,16 @@ const Blogs = () => {
               <div>
                 <label htmlFor="description">Description</label>
                 {/* {...register("description")} */}
-                <textarea
+                <CKEditor
                   name="description"
-                  id=""
-                  {...register("description")}
-                ></textarea>
-                <span className="error">{errors?.description?.message}</span>
+                  editor={ClassicEditor}
+                  data={selected?.description}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setDescription(data);
+                  }}
+                />
+                <span className="error">{error}</span>
               </div>
               <div>
                 <label htmlFor="">Image</label>

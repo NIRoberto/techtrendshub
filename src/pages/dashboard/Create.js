@@ -3,20 +3,24 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "../../axios/axios";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Report } from "notiflix/build/notiflix-report-aio";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
+import { useState } from "react";
 
 const schema = yup.object().shape({
   image: yup.mixed().test("required", "Choose an Image for blog", (value) => {
     return value && value.length;
   }),
   title: yup.string().required(),
-  description: yup.string().required(),
 });
 
 const Create = () => {
   const { auth } = useContext(AppContext);
+  const [error, setError] = useState("");
+  const [description, setDescription] = useState("");
   const {
     register,
     handleSubmit,
@@ -25,8 +29,13 @@ const Create = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const onSubmit = async ({ image, title, description }) => {
+  const onSubmit = async ({ image, title }) => {
+    if (!description) {
+      setError("Description is required");
+      return;
+    } else {
+      setError("");
+    }
     try {
       const formData = new FormData();
       formData.append("image", image[0]);
@@ -65,38 +74,17 @@ const Create = () => {
           </div>
           <div>
             <label htmlFor="description">Description</label>
-            {/* {...register("description")} */}
-            <textarea
-              name="description"
-              id=""
-              {...register("description")}
-            ></textarea>
             <span className="error">{errors?.description?.message}</span>
-            {/* <CKEditor
-              editor={ClassicEditor}
-              data=""
+            <CKEditor
               name="description"
-              onReady={(editor) => {
-                // You can store the "editor" and use when it is needed.
-                console.log("Editor is ready to use!", editor);
-              }}
+              editor={ClassicEditor}
+              data={description}
               onChange={(event, editor) => {
                 const data = editor.getData();
-                console.log({ event, editor, data });
+                setDescription(data);
               }}
-              onBlur={(event, editor) => {
-                console.log("Blur.", editor);
-              }}
-              onFocus={(event, editor) => {
-                console.log("Focus.", editor);
-              }}
-              {...register("description")}
-            /> */}
-            {/* <textarea
-              name="description"
-              id="desc"
-              {...register("description")}
-            ></textarea> */}
+            />
+            <span className="error">{error}</span>
           </div>
           <div>
             <label htmlFor="">Image</label>
