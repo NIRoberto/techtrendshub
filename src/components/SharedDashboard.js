@@ -4,7 +4,8 @@ import { Link, Outlet } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 
 const SharedDashboard = () => {
-  const { auth } = useContext(AppContext);
+  // const { auth } = useContext(AppContext);
+  const auth = JSON.parse(sessionStorage.getItem("user"));
   const [sidebar, setSidebar] = useState(false);
   return (
     <div className="dashboard">
@@ -28,13 +29,14 @@ const SharedDashboard = () => {
         </div>
         <div className="logout">
           <div className="user_logout">
-            <span className="user">{auth.user.name.split(" ")[0]}</span>
+            <span className="user">{auth.name.split(" ")[0]}</span>
           </div>
           <div className="">
             <span
               className="logout_btn"
               onClick={() => {
-                localStorage.removeItem("loggedUserData");
+                sessionStorage.removeItem("user");
+                sessionStorage.removeItem("token");
                 window.location.reload(true);
               }}
             >

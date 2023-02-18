@@ -1,11 +1,15 @@
 import React from "react";
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { AppContext } from "../context/AppProvider";
+import { allSelectedPosts } from "../features/postSlice";
 import Card from "./Card";
 import blog from "./data/blog";
 
 const Side = () => {
-  const { blogs } = useContext(AppContext);
+  // const { blogs } = useContext(AppContext);
+  const blogs  =  useSelector(allSelectedPosts)
+  
   return (
     <div className="sidebar">
       <div className="category">

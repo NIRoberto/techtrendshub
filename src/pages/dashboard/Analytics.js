@@ -2,9 +2,13 @@ import React, { useContext, useState } from "react";
 import { Bar, Line, Pie } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 import { AppContext } from "../../context/AppProvider";
+import { useSelector } from "react-redux";
+import { allSelectedPosts } from "../../features/postSlice";
 
 const Analytics = () => {
-  const { auth, blogs } = useContext(AppContext);
+  // const { auth, blogs } = useContext(AppContext);
+  const blogs = useSelector(allSelectedPosts);
+  // const blogs = useSelector(allSelectedPosts);
 
   const allData = [
     {
@@ -29,7 +33,7 @@ const Analytics = () => {
     },
   ];
 
-  const [userData, setUserData] = useState({
+  const [userData] = useState({
     labels: allData.map((item) => item.id),
     datasets: [
       {

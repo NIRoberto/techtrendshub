@@ -8,32 +8,36 @@ import axios from "../../axios/axios";
 import { Report } from "notiflix/build/notiflix-report-aio";
 import Notiflix from "notiflix";
 import { AppContext } from "../../context/AppProvider";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  allSelectedPosts,
+  deletePost,
+  updatePost,
+} from "../../features/postSlice";
 
 // import blog from "../../components/data/blog";
 
 const schema = yup.object().shape({
-  image: yup.mixed().test("required", "Choose an Image for blog", (value) => {
-    return value && value.length;
-  }),
+  // image: yup.mixed(),
   title: yup.string().required(),
   description: yup.string().required(),
 });
 const Blogs = () => {
-  const { auth, blogs } = useContext(AppContext);
-  const handleDelete = async (id) => {
+  const dispatch = useDispatch();
+  // const { auth, blogs } = useContext(AppContext);
+  const blogs = useSelector(allSelectedPosts);
+  const handleDelete = async (_id) => {
     try {
       Notiflix.Confirm.show(
-        "COnfirm to delete a post",
+        "Confirm to delete a post",
         "Are you sure you want to delete this post?",
         "Yes",
         "No",
         async function okCb() {
-          await axios.delete(`/blog/${id}`, {
-            headers: {
-              Authorization: `Bearer ${auth?.token}`,
-            },
+          dispatch(deletePost({ _id })).unwrap();
+          Report.success("Success", "Blog delete", "Ok", function cb() {
+            window.location.reload(true);
           });
-          window.location.reload(true);
         },
         function cancelCb() {
           // window.location.reload(true);
@@ -49,13 +53,12 @@ const Blogs = () => {
     }
   };
   const [selected, setSelected] = useState(null);
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   const getSingleBlog = async (id) => {
     const Selected = blogs.find((blog) => blog._id === id);
     setSelected(Selected);
     reset();
   };
-
   const {
     register,
     handleSubmit,
@@ -71,20 +74,13 @@ const Blogs = () => {
   useEffect(() => {
     reset(selected);
   }, [selected]);
-  const onSubmit = async ({ image, title, description }) => {
+  const onSubmit = async ({ title, description, image }) => {
     try {
-      const formData = new FormData();
-      formData.append("image", image[0]);
-      formData.append("title", title);
-      formData.append("description", description);
-      await axios.patch(`/blog/${selected._id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${auth?.token}`,
-        },
-      });
+      dispatch(
+        updatePost({ _id: selected._id, title, description, image })
+      ).unwrap();
       Report.success(
-        "You made it!",
+        "Success",
         "Blog updated successfully ",
         "Ok",
         function cb() {
@@ -92,7 +88,7 @@ const Blogs = () => {
         }
       );
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     }
   };
 

@@ -8,7 +8,7 @@ const SingleCard = ({ data }) => {
   const { _id, title, date, description, comments } = data;
   return (
     <div className="card">
-      <img src={data.image} alt={data.title} />
+      <img src={data?.image} alt={data.title} />
       <div>
         <div className="blog_text">
           <div className="content">

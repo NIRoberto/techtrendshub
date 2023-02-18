@@ -6,7 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 // import AppProvider from "./context/AppProvider";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
+import { fetchBlogs } from "./features/postSlice";
 
+store.dispatch(fetchBlogs());
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <AppProvider>

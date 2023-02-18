@@ -6,8 +6,11 @@ import { AppContext } from "../context/AppProvider";
 
 const Nav = () => {
   const [nav, setNav] = useState(true);
-  const { auth } = useContext(AppContext);
+  // const { auth } = useContext(AppContext);
+  const auth = JSON.parse(sessionStorage.getItem("user"));
   console.log(auth);
+  const token = sessionStorage.getItem("token");
+
   return (
     <>
       <header>
@@ -73,10 +76,10 @@ const Nav = () => {
           </ul>
 
           <div className="auth">
-            {auth?.token ? (
+            {token ? (
               <>
                 <Link className="user" to="/dashboard">
-                  <span className="user">{auth.user.name.split(" ")[0]}</span>
+                  <span className="user">{auth.name.split(" ")[0]}</span>
                 </Link>
                 <Link className="user" to="/dashboard">
                   <button>Go to dashboard</button>

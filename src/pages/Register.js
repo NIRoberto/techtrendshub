@@ -7,6 +7,8 @@ import { AppContext } from "../context/AppProvider";
 import { useContext } from "react";
 import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signup } from "../features/userSlice";
 
 const Register = () => {
   const [error, setError] = useState("");
@@ -24,19 +26,12 @@ const Register = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post("/signup", data);
-      const { token, user } = res.data;
-      const loggedUser = { token, user };
-      if (JSON.parse(localStorage.getItem("loggedUserData"))) {
-        localStorage.removeItem("loggedUserData");
-        localStorage.setItem("loggedUserData", JSON.stringify(loggedUser));
-      } else {
-        localStorage.setItem("loggedUserData", JSON.stringify(loggedUser));
-      }
-      window.location.reload(true);
+      dispatch(signup(data));
     } catch (error) {
       if (error.response.status === 400) {
         setError("Email already exists");

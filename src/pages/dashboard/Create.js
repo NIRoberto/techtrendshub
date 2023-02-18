@@ -6,6 +6,8 @@ import axios from "../../axios/axios";
 import { Report } from "notiflix/build/notiflix-report-aio";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
+import { useDispatch } from "react-redux";
+import { addPost } from "../../features/postSlice";
 
 const schema = yup.object().shape({
   image: yup.mixed().test("required", "Choose an Image for blog", (value) => {
@@ -16,7 +18,7 @@ const schema = yup.object().shape({
 });
 
 const Create = () => {
-  const { auth } = useContext(AppContext);
+  // const { auth } = useContext(AppContext);
   const {
     register,
     handleSubmit,
@@ -25,26 +27,20 @@ const Create = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const onSubmit = async ({ image, title, description }) => {
+  const dispatch = useDispatch();
+  const onSubmit = async (data) => {
     try {
-      const formData = new FormData();
-      formData.append("image", image[0]);
-      formData.append("title", title);
-      formData.append("description", description);
-      await axios.post("/blog", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${auth?.token}`,
-        },
-      });
-      Report.success("You made it!", "Blog created successfully ", "Ok", {
-        timeout: 2000,
-      });
-      setTimeout(() => {
-        window.location.reload(true);
-      }, 3000);
-      reset();
+      dispatch(addPost(data)).unwrap();
+      Report.success(
+        "You made it!",
+        "Blog created successfully ",
+        "Ok",
+
+        function cb() {
+          window.location.reload(true);
+          reset();
+        }
+      );
     } catch (error) {
       console.log(error.response);
     }

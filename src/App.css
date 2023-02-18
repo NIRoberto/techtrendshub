@@ -418,6 +418,13 @@ footer ul a:hover {
   flex-direction: column;
   gap: 0.3rem;
 }
+/* .ai .content .card .img {
+  height: 80vh !important;
+  border: 1px solid red;
+}
+.ai .content .popular img {
+  height: auto !important;
+} */
 
 .content .card .content {
   background-color: var(--text-white);
