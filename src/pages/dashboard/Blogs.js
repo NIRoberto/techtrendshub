@@ -3,6 +3,8 @@ import { useContext } from "react";
 import { ImCross } from "react-icons/im";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "../../axios/axios";
 import { Report } from "notiflix/build/notiflix-report-aio";
@@ -20,11 +22,12 @@ import {
 const schema = yup.object().shape({
   // image: yup.mixed(),
   title: yup.string().required(),
-  description: yup.string().required(),
 });
 const Blogs = () => {
   const dispatch = useDispatch();
   // const { auth, blogs } = useContext(AppContext);
+  const [error, setError] = useState("");
+  const [description, setDescription] = useState("");
   const blogs = useSelector(allSelectedPosts);
   const handleDelete = async (_id) => {
     try {
@@ -74,7 +77,13 @@ const Blogs = () => {
   useEffect(() => {
     reset(selected);
   }, [selected]);
-  const onSubmit = async ({ title, description, image }) => {
+  const onSubmit = async ({ title, image }) => {
+    if (!description) {
+      setError("Description is required");
+      return;
+    } else {
+      setError("");
+    }
     try {
       dispatch(
         updatePost({ _id: selected._id, title, description, image })
@@ -112,14 +121,14 @@ const Blogs = () => {
               <tbody>
                 {/* <tr> */}
                 {blogs.map((item, index) => {
-                  const { title, date, _id } = item;
+                  const { title, createdAt, _id } = item;
                   return (
                     <tr key={_id}>
                       <td>{index + 1}</td>
                       <td>
                         {title.length < 70 ? title : title.slice(0, 69) + "..."}
                       </td>
-                      <td>{date}</td>
+                      <td>{createdAt.substring(0, 10)}</td>
                       <td className="actions">
                         <span
                           className="edit"
@@ -168,13 +177,17 @@ const Blogs = () => {
               </div>
               <div>
                 <label htmlFor="description">Description</label>
-                {/* {...register("description")} */}
-                <textarea
+
+                <CKEditor
                   name="description"
-                  id=""
-                  {...register("description")}
-                ></textarea>
-                <span className="error">{errors?.description?.message}</span>
+                  editor={ClassicEditor}
+                  data={selected?.description}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setDescription(data);
+                  }}
+                />
+                <span className="error">{error}</span>
               </div>
               <div>
                 <label htmlFor="">Image</label>

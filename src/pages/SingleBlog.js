@@ -8,6 +8,7 @@ import Notiflix from "notiflix";
 // import { AppContext } from "../context/AppProvider";
 import { yupResolver } from "@hookform/resolvers/yup";
 // import axios from "../axios/axios";
+import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 import { selectBlogById } from "../features/postSlice";
 
@@ -65,7 +66,7 @@ const SingleBlog = () => {
       <div className="desc">
         <img src={filtered?.image} alt={filtered?.title} />
         <h1>{filtered?.title}</h1>
-        <div className="description">{filtered?.description}</div>
+        <div className="description">{parse(filtered?.description)}</div>
       </div>
       <div className="comments">
         <h5>({filtered?.comments.length}) Comment</h5>

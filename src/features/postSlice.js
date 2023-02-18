@@ -23,7 +23,7 @@ const formAdd = (t, d, i) => {
 };
 export const addPost = createAsyncThunk(
   "blog/createBlogs",
-  async ({ title, image, description }) => {
+  async ({ title,  description,image }) => {
     try {
       const response = await axios.post(
         "/blog",
@@ -45,7 +45,7 @@ export const updatePost = createAsyncThunk(
   "blog/updateBlogs",
   async ({ _id, title, description, image }) => {
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         `/blog/${_id}`,
         formAdd(title, description, image),
         {

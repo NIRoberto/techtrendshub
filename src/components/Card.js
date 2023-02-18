@@ -2,9 +2,9 @@ import React from "react";
 import { AiOutlineComment, AiOutlineUser } from "react-icons/ai";
 import { MdDateRange } from "react-icons/md";
 import { Link } from "react-router-dom";
-
+import parse from "html-react-parser";
 const Card = ({ item }) => {
-  const { title, _id, comments, image, description, date } = item;
+  const { title, _id, comments, image, description, createdAt } = item;
   return (
     <div className="card">
       <img className="img" src={image} alt={title} />
@@ -17,7 +17,7 @@ const Card = ({ item }) => {
             </span>
             <span>
               <MdDateRange className="icon" />
-              <span>{date}</span>
+              <span>{createdAt.substring(0, 10)}</span>
             </span>
             <span className="comment">
               <AiOutlineComment />
@@ -29,7 +29,13 @@ const Card = ({ item }) => {
               <h3>{title}</h3>
             </Link>
           </div>
-          <div className="description">{description.length<200?description:description.slice(0,200)+"..."}</div>
+          <div className="description">
+            {parse(
+              description.length < 200
+                ? description
+                : description.slice(0, 200) + "..."
+            )}
+          </div>
         </div>
         <Link to={`/ai/${_id}`}>
           <button className="btn">Read more...</button>
