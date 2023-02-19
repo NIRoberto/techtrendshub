@@ -105,7 +105,12 @@ const SharedDashboard = () => {
           </li> */}
         </ul>
       </div>
-      <div className="out">
+      <div
+        className="out"
+        onClick={() => {
+          setSidebar(false);
+        }}
+      >
         <Outlet />
       </div>
     </div>

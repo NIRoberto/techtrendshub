@@ -128,7 +128,10 @@ const Blogs = () => {
                       <td>
                         {title.length < 70 ? title : title.slice(0, 69) + "..."}
                       </td>
-                      <td>{createdAt.substring(0, 10)}</td>
+                      <td>
+                        {createdAt.substring(0, 10)}
+                        {/* {item.description} */}
+                      </td>
                       <td className="actions">
                         <span
                           className="edit"

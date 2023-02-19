@@ -45,7 +45,7 @@ const Side = () => {
         <h4> Popular post</h4>
         {blogs.map((item, index) => {
           if (index < 4) {
-            return <Card key={item.id} item={item} index={index} />;
+            return <Card key={item._id} item={item} index={index} />;
           }
         })}
       </div>

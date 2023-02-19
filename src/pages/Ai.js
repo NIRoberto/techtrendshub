@@ -2,15 +2,21 @@ import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import Card from "../components/Card";
 import Side from "../components/Side";
-import { AppContext } from "../context/AppProvider";
+// import { AppContext } from "../context/AppProvider";
 import { allSelectedPosts } from "../features/postSlice";
+import { motion } from "framer-motion";
 
 const Ai = () => {
   // const { blogs } = useContext(AppContext);
   const blogs = useSelector(allSelectedPosts);
 
   return (
-    <div className="ai single">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="ai single"
+    >
       <h1>Artifial intelligence /</h1>
       <div className="content">
         <div className="allai">
@@ -20,7 +26,7 @@ const Ai = () => {
         </div>
         <Side />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

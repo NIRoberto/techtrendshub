@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "../axios/axios";
+import { motion } from "framer-motion";
 import { allUserState, login } from "../features/userSlice";
 
 // const schema = yup.object().shape({
@@ -20,12 +21,17 @@ const Login = () => {
     try {
       dispatch(login(data)).unwrap();
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error.message);
     }
   };
 
   return (
-    <div className="login">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="login"
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="email">Email</label>
@@ -47,7 +53,7 @@ const Login = () => {
         </div>
         <button>Login</button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 
