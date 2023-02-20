@@ -1,12 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../axios/axios";
-
 const initialState = {
   isLoggedIn: false,
   userData: {},
   error: "",
 };
-
 const setSession = (res) => {
   if (sessionStorage.getItem("token")) {
     sessionStorage.removeItem("token");
@@ -25,7 +23,7 @@ export const login = createAsyncThunk("user/login", async (initialState) => {
     window.location.reload(true);
     return response;
   } catch (error) {
-    console.log(error.response);
+    console.log(error.response.data.message);
   }
 });
 
@@ -57,7 +55,8 @@ const userSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.user.isLoggedIn = false;
-        state.user.error = action.payload.data;
+        state.user.error = action.payload;
+        console.log(action.payload);
       })
       .addCase(signup.fulfilled, (state, action) => {
         state.user.isLoggedIn = true;
@@ -66,7 +65,7 @@ const userSlice = createSlice({
   },
 });
 
-export const userStateError = (state) => state.user.error;
+export const userStateError = (state) => state?.error;
 export const allUserState = (state) => state.user;
 
 export default userSlice.reducer;

@@ -3,9 +3,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
-import axios from "../axios/axios";
+// import axios from "../axios/axios";
 import { motion } from "framer-motion";
-import { allUserState, login } from "../features/userSlice";
+import {  login} from "../features/userSlice";
 
 // const schema = yup.object().shape({
 //   email: yup.string().required(),
@@ -14,7 +14,6 @@ import { allUserState, login } from "../features/userSlice";
 const Login = () => {
   const [error, setError] = useState("");
   const { register, handleSubmit } = useForm({});
-
   const dispatch = useDispatch();
 
   const onSubmit = async (data) => {

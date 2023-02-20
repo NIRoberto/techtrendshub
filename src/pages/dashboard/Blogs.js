@@ -88,14 +88,6 @@ const Blogs = () => {
       dispatch(
         updatePost({ _id: selected._id, title, description, image })
       ).unwrap();
-      Report.success(
-        "Success",
-        "Blog updated successfully ",
-        "Ok",
-        function cb() {
-          window.location.reload(true);
-        }
-      );
     } catch (error) {
       console.log(error);
     }

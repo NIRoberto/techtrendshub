@@ -4,7 +4,6 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { Report } from "notiflix/build/notiflix-report-aio";
 // import { useContext } from "react";
 // import { AppContext } from "../../context/AppProvider";
 import { useDispatch } from "react-redux";
@@ -40,16 +39,6 @@ const Create = () => {
     }
     try {
       dispatch(addPost({ title, description, image })).unwrap();
-      Report.success(
-        "You made it!",
-        "Blog created successfully ",
-        "Ok",
-
-        function cb() {
-          window.location.reload(true);
-          reset();
-        }
-      );
     } catch (error) {
       console.log(error.response);
     }

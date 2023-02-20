@@ -9,8 +9,8 @@ import Notiflix from "notiflix";
 import { yupResolver } from "@hookform/resolvers/yup";
 // import axios from "../axios/axios";
 import parse from "html-react-parser";
-import { useSelector } from "react-redux";
-import { selectBlogById } from "../features/postSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addComment, selectBlogById } from "../features/postSlice";
 
 const schema = yup.object().shape({
   comment: yup.string().min(3).required(),
@@ -21,7 +21,6 @@ const SingleBlog = () => {
   // const filtered = blogs.find((item) => item._id === aiId);
 
   const filtered = useSelector((state) => selectBlogById(state, aiId));
-  console.log(filtered);
   const {
     register,
     handleSubmit,
@@ -30,34 +29,27 @@ const SingleBlog = () => {
     resolver: yupResolver(schema),
   });
 
-  // const navigate = useNavigate();
-  const onSubmit = async (data) => {
-    // try {
-    //   if (auth?.token) {
-    //     await axios.post(`/comment/${aiId}`, data, {
-    //       headers: {
-    //         Authorization: `Bearer ${auth?.token}`,
-    //       },
-    //     });
-    //     Report.success("You made it!", "Comment posted", "Ok", {
-    //       timeout: 2000,
-    //     });
-    //     setTimeout(() => {
-    //       window.location.reload(true);
-    //     }, 3000);
-    //   } else {
-    //     Notiflix.Report.failure(
-    //       "Failed",
-    //       "Login  first to comment on this post",
-    //       "Ok",
-    //       function cb() {
-    //         navigate("/login");
-    //       }
-    //     );
-    //   }
-    // } catch (error) {
-    //   console.log(error.response);
-    // }
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onSubmit = async ({ comment }) => {
+    try {
+      if (sessionStorage.getItem("token")) {
+        dispatch(addComment({ aiId, comment })).unwrap();
+      
+      } else {
+        Notiflix.Report.failure(
+          "Failed",
+          "Login  first to comment on this post",
+          "Ok",
+          function cb() {
+            navigate("/login");
+          }
+        );
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
   };
   // if (!filtered) return;
 
@@ -71,37 +63,16 @@ const SingleBlog = () => {
       <div className="comments">
         <h5>({filtered?.comments.length}) Comment</h5>
         <div className="comment">
-          {/* {filtered?.comments.map((item) => {
-            console.log(item);
+          {filtered?.comments.map((item) => {
             return (
-              <div>
+              <div key={item._id}>
                 <h3>{item?.name}</h3>
                 <p>{item?.comment}</p>
               </div>
             );
-          })} */}
+          })}
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* <div>
-            <label htmlFor="email">Full name</label>
-            <input
-              type="text"
-              name="name"
-              {...register("name")}
-              placeholder="Enter name here..."
-            />
-            <span className="error">{errors?.name?.message}</span>
-          </div> */}
-          {/* <div>
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              {...register("email")}
-              placeholder="Enter email here..."
-            />
-            <span className="error">{errors?.email?.message}</span>
-          </div> */}
           <div>
             <label htmlFor="comment">comment</label>
             <textarea

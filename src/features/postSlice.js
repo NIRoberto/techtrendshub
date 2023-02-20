@@ -1,4 +1,5 @@
 import axios from "../axios/axios";
+import { Report } from "notiflix/build/notiflix-report-aio";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -23,7 +24,7 @@ const formAdd = (t, d, i) => {
 };
 export const addPost = createAsyncThunk(
   "blog/createBlogs",
-  async ({ title,  description,image }) => {
+  async ({ title, description, image }) => {
     try {
       const response = await axios.post(
         "/blog",
@@ -35,6 +36,38 @@ export const addPost = createAsyncThunk(
           },
         }
       );
+      Report.success(
+        "You made it!",
+        "Blog created successfully ",
+        "Ok",
+
+        function cb() {
+          window.location.reload(true);
+          //  reset();
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+export const addComment = createAsyncThunk(
+  "blog/createComment",
+  async ({ aiId, comment }) => {
+    try {
+      const response = await axios.post(
+        `/comment/${aiId}`,
+        { comment },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        }
+      );
+      Report.success("You made it!", "Comment posted", "Ok", function cb() {
+        window.location.reload(true);
+      });
       return response.data;
     } catch (error) {
       return error;
@@ -55,6 +88,14 @@ export const updatePost = createAsyncThunk(
           },
         }
       );
+      Report.success(
+        "Success",
+        "Blog updated successfully ",
+        "Ok",
+        function cb() {
+          window.location.reload(true);
+        }
+      );
       return response.data;
     } catch (error) {
       return error;
@@ -63,17 +104,15 @@ export const updatePost = createAsyncThunk(
 );
 export const deletePost = createAsyncThunk(
   "blog/deleteBlogs",
-  async ({ _id}) => {
+  async ({ _id }) => {
     try {
-      const response = await axios.delete(
-        `/blog/${_id}`,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.delete(`/blog/${_id}`, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      });
+
       return response.status;
     } catch (error) {
       return error;
@@ -108,6 +147,10 @@ const blogSlice = createSlice({
         state.status = "suceeded";
         state.blogs = action.payload;
       })
+      .addCase(addComment.fulfilled, (state, action) => {
+        state.status = "suceeded";
+        // state.blogs = action.payload;
+      })
       .addCase(fetchBlogs.rejected, (state, action) => {
         state.status = "failed";
       })
@@ -132,7 +175,6 @@ const blogSlice = createSlice({
         const blogs = state.blogs.filter((blog) => blog._id !== _id);
         state.blogs = blogs;
       });
-
   },
 });
 export const { blogAdded } = blogSlice.actions;
