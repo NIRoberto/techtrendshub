@@ -8,6 +8,7 @@ import Notiflix from "notiflix";
 import { AppContext } from "../context/AppProvider";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "../axios/axios";
+import { motion } from "framer-motion";
 
 const schema = yup.object().shape({
   comment: yup.string().min(3).required(),
@@ -57,7 +58,12 @@ const SingleBlog = (props) => {
   // if (!filtered) return;
 
   return (
-    <div className="singleBlog">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="singleBlog"
+    >
       <div className="desc">
         <img src={filtered?.image} alt={filtered?.title} />
         <h1>{filtered?.title}</h1>
@@ -116,7 +122,7 @@ const SingleBlog = (props) => {
         </form>
       </div>
       <Side />
-    </div>
+    </motion.div>
   );
 };
 

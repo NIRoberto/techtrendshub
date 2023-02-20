@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Bar, Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 import { AppContext } from "../../context/AppProvider";
+import { motion } from "framer-motion";
 
 const Analytics = () => {
   const { users, blogs } = useContext(AppContext);
@@ -41,7 +42,11 @@ const Analytics = () => {
   });
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <div className="charts">
         <div className="">
           <Bar data={userData} />
@@ -71,7 +76,7 @@ const Analytics = () => {
           <span>All queries</span>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 };
 

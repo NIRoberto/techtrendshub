@@ -1,10 +1,15 @@
 import React from "react";
 import SingleList from "../components/SingleList";
 import Slider from "../components/Slider";
+import { motion } from "framer-motion";
 
 const Home = () => {
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <main className="home">
         <h1>
           <span>Tech</span>trends
@@ -24,7 +29,7 @@ const Home = () => {
           return <SingleList key={index} />;
         })}
       </div>
-    </>
+    </motion.div>
   );
 };
 

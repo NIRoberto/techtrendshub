@@ -3,19 +3,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import axios from "../axios/axios";
-
-
+import { motion } from "framer-motion";
 // const schema = yup.object().shape({
 //   email: yup.string().required(),
 //   password: yup.string().min(6).max(12).required(),
 // });
 const Login = () => {
   const [error, setError] = useState("");
-  const {
-    register,
-    handleSubmit,
-  } = useForm({
-  });
+  const { register, handleSubmit } = useForm({});
   const onSubmit = async (data) => {
     try {
       setError("");
@@ -36,7 +31,12 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="login"
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="email">Email</label>
@@ -58,7 +58,7 @@ const Login = () => {
         </div>
         <button>Login</button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

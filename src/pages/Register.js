@@ -7,6 +7,7 @@ import { AppContext } from "../context/AppProvider";
 import { useContext } from "react";
 import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Register = () => {
   const [error, setError] = useState("");
@@ -45,7 +46,12 @@ const Register = () => {
   };
 
   return (
-    <div className="login">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="login"
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         <span className="exit">{error || ""}</span>
         <div>
@@ -80,7 +86,7 @@ const Register = () => {
         </div>
         <button>Register</button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 
