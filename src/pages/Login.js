@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import axios from "../axios/axios";
-import { motion } from "framer-motion";
 // const schema = yup.object().shape({
 //   email: yup.string().required(),
 //   password: yup.string().min(6).max(12).required(),
@@ -31,12 +30,7 @@ const Login = () => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="login"
-    >
+    <div className="login">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="email">Email</label>
@@ -58,7 +52,7 @@ const Login = () => {
         </div>
         <button>Login</button>
       </form>
-    </motion.div>
+    </div>
   );
 };
 

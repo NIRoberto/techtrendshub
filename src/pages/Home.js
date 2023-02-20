@@ -1,15 +1,9 @@
 import React from "react";
 import SingleList from "../components/SingleList";
 import Slider from "../components/Slider";
-import { motion } from "framer-motion";
-
 const Home = () => {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
+    <>
       <main className="home">
         <h1>
           <span>Tech</span>trends
@@ -23,13 +17,12 @@ const Home = () => {
         </p>
       </main>
       <Slider />
-
       <div className="all">
         {[1, 2, 3, 4].map((item, index) => {
           return <SingleList key={index} />;
         })}
       </div>
-    </motion.div>
+    </>
   );
 };
 

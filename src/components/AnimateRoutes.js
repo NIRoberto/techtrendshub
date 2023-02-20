@@ -23,18 +23,40 @@ import Users from "../pages/dashboard/Users";
 import Queries from "../pages/dashboard/Queries";
 import News from "../pages/dashboard/News";
 import { AnimatePresence } from "framer-motion";
+import AnimatedPage from "./AnimatedPage";
 
 const AnimateRoutes = () => {
   const location = useLocation();
 
   return (
-    <AnimatePresence>
+    <AnimatePresence exitBeforeEnter>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<SharedComponent />}>
-          <Route index element={<Home />}></Route>
+          <Route
+            index
+            element={
+              <AnimatedPage>
+                <Home />
+              </AnimatedPage>
+            }
+          ></Route>
           {/* <Route path="blog" element={<BlogShared />}> */}
-          <Route path="ai" element={<Ai />}></Route>
-          <Route path="ai/:aiId" element={<SingleBlog />}></Route>
+          <Route
+            path="ai"
+            element={
+              <AnimatedPage>
+                <Ai />
+              </AnimatedPage>
+            }
+          ></Route>
+          <Route
+            path="ai/:aiId"
+            element={
+              <AnimatedPage>
+                <SingleBlog />
+              </AnimatedPage>
+            }
+          ></Route>
           <Route path="/cloud" element={<Cloud />}></Route>
           <Route path="cloud/:cloudId" element={<SingleBlog />}></Route>
           <Route path="/devops" element={<DevOps />}></Route>
@@ -59,7 +81,14 @@ const AnimateRoutes = () => {
           />
           <Route path="*" element={<Home />}></Route>
           {/* </Route> */}
-          <Route path="/contact" element={<Contact />}></Route>
+          <Route
+            path="/contact"
+            element={
+              <AnimatedPage>
+                <Contact />
+              </AnimatedPage>
+            }
+          ></Route>
           <Route path="*" element={<Home />}></Route>
         </Route>
         <Route

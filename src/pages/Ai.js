@@ -1,18 +1,13 @@
 import React, { useContext } from "react";
 import Card from "../components/Card";
 import Side from "../components/Side";
-import  {motion} from  "framer-motion"
 import { AppContext } from "../context/AppProvider";
 
 const Ai = () => {
   const { blogs } = useContext(AppContext);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    className="ai single">
+    <div className="ai single">
       <h1>Artifial intelligence /</h1>
       <div className="content">
         <div className="allai">
@@ -22,7 +17,7 @@ const Ai = () => {
         </div>
         <Side />
       </div>
-    </motion.div>
+    </div>
   );
 };
 
