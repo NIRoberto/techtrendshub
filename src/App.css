@@ -978,7 +978,7 @@ td {
 }
 
 .dashboard ul {
-  border-left: 4px solid var(--main-color);
+  /* border-left: 4px solid var(--main-color); */
   margin-left: 2rem;
   border-radius: 5px;
 }
