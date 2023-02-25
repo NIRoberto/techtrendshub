@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 
 const Analytics = () => {
   const { users, blogs } = useContext(AppContext);
-
   const allData = [
     {
       id: 11,
